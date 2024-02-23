@@ -1,61 +1,83 @@
 package org.ficha2902082.maven.parking.vn;
-//Importar dependencias 
-import org.ficha2902082.maven.parking.vn.entities.Carro; 
-import org.ficha2902082.maven.parking.vn.entities.TipoVehiculo;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import org.ficha2902082.maven.parking.vn.entities.Registro;
+import org.ficha2902082.maven.parking.vn.entities.Carro;
 import org.ficha2902082.maven.parking.vn.entities.Cliente;
+import org.ficha2902082.maven.parking.vn.entities.Cupo;
 import org.ficha2902082.maven.parking.vn.entities.TipoDocumento;
+import org.ficha2902082.maven.parking.vn.entities.TipoVehiculo;
+import java.time.LocalDate;
+import java.time.*;
+
 public class Main {
-    public static void main(String[] args) {
-        //Crear dos instancias 
-        // de la clase carro
-        Carro carrito1 = new Carro();
-        carrito1.placa = "ASB 345";
-        carrito1.tipoVehiculo = TipoVehiculo.CAMIONETA;
 
-        Carro carrito2 = new Carro();
-        carrito2.placa = "DMK 765";
-        carrito2.tipoVehiculo = TipoVehiculo.TAXI;
+    public static void main(String[] args){
 
-        Carro carrito3 = new Carro();
-        carrito3.placa = "COZ 92E";
-        carrito3.tipoVehiculo = TipoVehiculo.MOTO; 
+        //Crear dos cupos 
+        //Instanciar dos cupos
 
-///////////////
+        Cupo cupito1 = new Cupo();
+        cupito1.ancho = 1.0;
+        cupito1.largo = 4.5;
+        cupito1.letra = 'A';
+        //istanciar dos carritos
+        Cupo cupito2 = new Cupo('B', 5.0, 2.5);
+        Carro carrito1 = new Carro("ABC123", TipoVehiculo.CARRO);
+        Carro carrito2 = new Carro("DFG456", TipoVehiculo.CAMIONETA);
+        Cliente clientesito1 = new Cliente("Nicolas", "Romero Lozano", TipoDocumento.TI, 1146124198L, 3068981473L);
+    
+        clientesito1.addCar(carrito1);
+        clientesito1.addCar(carrito2);
+        clientesito1.addCar("MNT789",TipoVehiculo.TAXI);
 
-        Cliente cliente1 = new Cliente();
-        cliente1.nombre = "NICOLAS";
-        cliente1.apellidos = "ROMERO";
-        cliente1.tipoDocumento = TipoDocumento.CC;
-        cliente1.numeroDocumento = 1014667051L;
-        cliente1.celular = 3118482726L;
+        //Declarar lista de registros
 
-        //AÑADIR CARROS AL CLIENTE
-        //Invocar llamar, ejecutar el metodo
-        //El metodo AddCar
-        cliente1.addCar(carrito1);
-        cliente1.addCar(carrito2); 
-        cliente1.addCar("ASD 456", TipoVehiculo.MOTO);
+        List <Registro> misRegistros = new ArrayList<>();
 
-        System.out.println("Cliente:");
-        System.out.println("documento:" + cliente1.numeroDocumento);
-        System.out.println("tipoDocumento:" + cliente1.tipoDocumento);
-        System.out.println("nombre:" + cliente1.nombre);
-        System.out.println("apellido:" + cliente1.apellidos);
-        System.out.println("celular:" + cliente1.celular);
-        System.out.println("Vehiculos:");
-        for( Carro c : cliente1.misCarros){
-            System.out.println("placa:" + c.placa);
-            System.out.println("tipo:" + c.tipoVehiculo);
-            System.err.println("_____________");
+        //Instanciar dos registros de entrada y salida (E/S)
 
+        Registro registro1 = new Registro(
+            LocalDate.of(2024, Month.JANUARY, 23) , 
+            LocalTime.of(15, 30, 34),
+            LocalDate.of(2024, Month.FEBRUARY, 1),
+            LocalTime.of(6, 30, 23),
+            50000.00,
+            clientesito1.misCarros.get(0),
+            cupito1
+
+        );
+
+        //Vinvular los registros a la lista de registros
+        
+        misRegistros.add(registro1);
+
+        Registro registro2 = new Registro(
+            LocalDate.of(2024,Month.JANUARY , 30),
+            LocalTime.of(6,35,59),
+            LocalDate.of(2024, Month.JULY, 29),
+            LocalTime.of(7,45,12),
+            75000.00,
+            clientesito1.misCarros.get(1),
+            cupito2        
+        );
+
+        misRegistros.add(registro2);
+        //recorrer la lista de registros
+        for( Registro r : misRegistros ){
+            System.out.println("Placa: " + 
+                                r.carro.placa  +  "|" +
+                                "Cupo: " +
+                                r.cupo.letra + "|" +
+                                "Valor: " +
+                                r.valor +  "|"+
+                                "Fecha Inicio: " +
+                                r.fechaInicio.toString() + "|"
+            );
         }
 
-
-
-
-
-
-
-
     }
-}
+
+}          
